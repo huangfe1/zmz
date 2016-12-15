@@ -1,0 +1,1 @@
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/css/typeahead-bootstrap.css"/>

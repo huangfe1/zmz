@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.dreamer.domain.account">
+	<class name="com.dreamer.domain.account.VoucherRecord" table="voucher_record">
+		<id name="id" type="java.lang.Integer">
+			<column name="id" />
+			<generator class="native" />
+		</id>
+		<version generated="never" name="version" type="java.lang.Integer">
+			<column name="version">
+				<comment>数据版本号</comment>
+			</column>
+		</version>
+		
+		<many-to-one name="agent" lazy="false" class="com.dreamer.domain.user.User"
+			fetch="select"  not-null="true">
+			<column name="agent" >
+				<comment>记录属于的代理</comment>
+			</column>
+		</many-to-one>
+		
+		
+		<property generated="never" lazy="false" name="voucher"
+			type="java.lang.Double">
+			<column name="voucher" not-null="true">
+				<comment>代金券数量</comment>
+			</column>
+		</property>
+		
+		<property generated="never" lazy="false" name="voucher_now"
+			type="java.lang.Double">
+			<column name="voucher_now" not-null="true">
+				<comment>变更后代金券数量</comment>
+			</column>
+		</property>
+	
+		<property generated="never" lazy="false" name="more" type="java.lang.String">
+   			<column length="64" name="more" not-null="true">
+   			 <comment>更多</comment>
+   			</column>
+  		</property>
+	
+			<property generated="never" lazy="false" name="type"
+			type="java.lang.Integer">
+			<column name="type" not-null="true">
+				<comment>类型</comment>
+			</column>
+		</property>
+
+		<property generated="never" lazy="false" name="hasNoticed"
+				  type="java.lang.Integer">
+			<column name="hasNoticed" not-null="true">
+				<comment>是否已经通知</comment>
+			</column>
+		</property>
+
+		
+		<property generated="never" lazy="false" name="updateTime"
+			type="java.util.Date">
+			<column length="19" name="update_time">
+				<comment>更新时间戳</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

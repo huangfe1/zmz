@@ -1,0 +1,1 @@
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/bower_components/Jcrop/css/Jcrop.min.css"/>

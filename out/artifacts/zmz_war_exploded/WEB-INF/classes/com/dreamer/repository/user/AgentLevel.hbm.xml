@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.dreamer.domain.user">
+ <class dynamic-insert="true" dynamic-update="true" lazy="true"
+  name="AgentLevel" table="agent_level">
+  <id name="id" type="java.lang.Integer">
+   <column name="id"/>
+   <generator class="native"/>
+  </id>
+  <version generated="never" name="version" type="java.lang.Integer">
+   <column name="version">
+    <comment>数据版本号</comment>
+   </column>
+  </version>
+  <property generated="never" lazy="false" name="name" type="java.lang.String">
+   <column length="64" name="name" not-null="true">
+    <comment>代理等级名称</comment>
+   </column>
+  </property>
+  <many-to-one class="AgentLevel" fetch="select" lazy="proxy"
+   name="parent" not-found="ignore" not-null="false">
+   <column name="parent">
+    <comment>上级代理等级</comment>
+   </column>
+  </many-to-one>
+  <property generated="never" lazy="false" name="level" type="java.lang.Integer">
+   <column default="0" name="level">
+    <comment>所属层级 上级等级的level值加1</comment>
+   </column>
+  </property>
+   <property generated="never" lazy="false" name="auto_promotion" type="java.lang.Boolean">
+   <column default="1" name="auto_promotion">
+    <comment>是否允许自动升到本等级</comment>
+   </column>
+  </property>
+  <property generated="never" lazy="false" name="order" type="java.lang.Integer">
+   <column name="sequence">
+    <comment>排序</comment>
+   </column>
+  </property>
+  <property generated="never" insert="true" lazy="false"
+   name="updateTime" type="java.sql.Timestamp" update="true">
+   <column length="19" name="update_time">
+    <comment>更新时间戳</comment>
+   </column>
+  </property>
+  <set cascade="all" fetch="subselect" inverse="true" lazy="true"
+   name="children" order-by="sequence asc" sort="unsorted">
+   <key>
+    <column name="parent" not-null="false">
+     <comment>上级代理</comment>
+    </column>
+   </key>
+   <one-to-many class="AgentLevel"/>
+  </set>
+  
+  <!--产品的类型 -->
+    <property generated="never" lazy="false" name="goodsType">
+			<column name="goodsType" not-null="false" default="0">
+				<comment>产品类型</comment>
+			</column>
+			<type name="org.hibernate.type.EnumType">
+				<param name="enumClass">com.dreamer.domain.goods.GoodsType</param>
+				<param name="type">4</param>
+				<param name="useNamed">false</param>
+			</type>
+		</property>
+  
+ </class>
+</hibernate-mapping>

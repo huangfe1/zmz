@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.dreamer.domain.user">
+	<class name="Address" table="address">
+		<id name="id" type="java.lang.Integer">
+			<column name="id" />
+			<generator class="native" />
+		</id>
+		<many-to-one class="com.dreamer.domain.user.User" fetch="select"
+			lazy="proxy" name="agent" not-found="ignore">
+			<column name="user" not-null="true">
+				<comment>地址所有人</comment>
+			</column>
+		</many-to-one>
+		<property generated="never" lazy="false" name="benefitPointsBalance"
+			type="java.lang.Double">
+			<column name="benefit_points_balance" precision="16">
+				<comment>福利积分余额</comment>
+			</column>
+		</property>
+		<property name="province" type="java.lang.String" lazy="false" >
+			<column name="province">
+				<comment>省</comment>
+			</column>
+		</property>
+		<property name="city" type="java.lang.String" lazy="false" >
+			<column name="city">
+				<comment>市</comment>
+			</column>
+		</property>
+		<property name="country" type="java.lang.String" lazy="false">
+			<column name="country">
+				<comment>县</comment>
+			</column>
+		</property>
+		<property name="address" type="java.lang.String" lazy="false">
+			<column name="address">
+				<comment>详细地址</comment>
+			</column>
+		</property>
+		<property name="post_code" type="java.lang.Integer" lazy="false">
+			<column name="post_code">
+				<comment>邮政编码</comment>
+			</column>
+		</property>
+		<property name="consignee" type="java.lang.String" lazy="false">
+			<column name="consignee" >
+				<comment>收货人</comment>
+			</column>
+		</property>
+		<property name="mobile" type="java.lang.String" lazy="false">
+			<column name="mobile">
+				<comment>收货人电话</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,1 @@
+<script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/common.js"></script>

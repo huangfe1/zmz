@@ -1,0 +1,1 @@
+<script type="text/javascript" src="<%=request.getContextPath()%>/resources/bower_components/bootstrap-treeview/dist/bootstrap-treeview.min.js"></script>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.dreamer.domain.account">
+	<class name="com.dreamer.domain.account.GoodsAccount" table="goods_account">
+		<id name="id" type="java.lang.Integer">
+			<column name="id" />
+			<generator class="native" />
+		</id>
+		<version generated="never" name="version" type="java.lang.Integer">
+			<column name="version">
+				<comment>数据版本号</comment>
+			</column>
+		</version>
+		
+		
+		<many-to-one class="com.dreamer.domain.user.User" fetch="select"
+			name="user" foreign-key="fk_account_user">
+			<column name="user" not-null="true">
+				<comment>账户所属人</comment>
+			</column>
+		</many-to-one>
+		<many-to-one class="com.dreamer.domain.goods.Goods" fetch="select"
+			not-found="ignore" name="goods" not-null="false">
+			<column name="goods" not-null="true">
+				<comment>货物</comment>
+			</column>
+		</many-to-one>
+		<property generated="never" lazy="false" name="currentBalance"
+			type="java.lang.Integer">
+			<column name="current_balance" not-null="true">
+				<comment>当前余额</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="currentPoint"
+			type="java.lang.Double">
+			<column name="current_point" not-null="true" precision="16">
+				<comment>当前积分</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="cumulative"
+			type="java.lang.Integer">
+			<column name="cumulative" not-null="true">
+				<comment>本货物的当前购买累计数</comment>
+			</column>
+		</property>
+		<many-to-one class="com.dreamer.domain.user.AgentLevel"
+			fetch="select" name="agentLevel" not-found="ignore" not-null="false">
+			<column name="agent_level" not-null="false" sql-type="INTEGER">
+				<comment>用户级别(代理等级,针对本货物)</comment>
+			</column>
+		</many-to-one>
+		<property generated="never" lazy="false" name="updateTime"
+			type="java.util.Date">
+			<column length="19" name="update_time">
+				<comment>更新时间戳</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

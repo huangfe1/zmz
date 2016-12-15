@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.dreamer.domain.goods">
+	<class dynamic-insert="true" dynamic-update="true" mutable="false"
+		name="StockBlotter" table="stock_blotter">
+		<id name="id" type="java.lang.Integer">
+			<column name="id" />
+			<generator class="native" />
+		</id>
+		<many-to-one class="com.dreamer.domain.user.Admin" fetch="select" not-found="ignore"
+			name="user">
+			<column name="operator">
+				<comment>操作员</comment>
+			</column>
+		</many-to-one>
+		<many-to-one class="Goods" fetch="select" name="goods" not-found="ignore" cascade="save-update,merge">
+			<column name="goods" not-null="true">
+				<comment>商品</comment>
+			</column>
+		</many-to-one>
+		<property generated="never" lazy="false" name="change"
+			type="java.lang.Integer">
+			<column name="stock_change" not-null="true">
+				<comment>库存变更数</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="currentBalance"
+			type="java.lang.Integer">
+			<column name="current_balance">
+				<comment>变更后当前公司账户总余额</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="operateTime"
+			type="java.sql.Timestamp">
+			<column length="19" name="operate_time">
+				<comment>变更时间</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="currentStock"
+			type="java.lang.Integer">
+			<column name="current_stock">
+				<comment>变更后当前公司库存量</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="point"
+			type="java.lang.Double">
+			<column name="point" precision="16">
+				<comment>积分变更</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="currentPoint"
+			type="java.lang.Double">
+			<column name="current_point" precision="16">
+				<comment>变更后公司当前总的积分</comment>
+			</column>
+		</property>
+		 <property name="remark" type="java.lang.String">
+            <column name="remark" length="128">
+                <comment>说明</comment>
+            </column>
+        </property>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans:beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:dwr="http://www.directwebremoting.org/schema/spring-dwr"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:cache="http://www.springframework.org/schema/cache"
+	xsi:schemaLocation="http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+	 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	 http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+	 http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd 
+	 http://www.directwebremoting.org/schema/spring-dwr http://www.directwebremoting.org/schema/spring-dwr.xsd
+	 http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd 
+	 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+	 http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd"
+	default-lazy-init="false" default-autowire="byName">
+	<context:annotation-config />
+	<context:property-placeholder location="classpath:META-INF/db/config.properties" />
+	<context:component-scan
+		base-package="com.dreamer.view.filter.**,com.dreamer.service.**,com.dreamer.repository.**,com.dreamer.domain.**,com.dreamer.time.**" />
+	 <cache:annotation-driven/>
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="defaultAutoCommit" value="false"></property>
+		<property name="driverClassName" value="${db.driver}"></property>
+		<property name="url"
+			value="jdbc:mysql://${db.ip}:${db.port}/${db.databaseName}?autoReconnect=true"></property>
+		<property name="username" value="${db.user}"></property>
+		<property name="password" value="${db.password}"></property>
+		<property name="initialSize" value="${db.initialSize}"></property>
+		<property name="maxActive" value="${db.maxActive}"></property>
+		<property name="maxIdle" value="${db.maxIdle}"></property>
+		<property name="minIdle" value="${db.minIdle}"></property>
+		<property name="removeAbandoned" value="true"></property>
+		<property name="testOnBorrow" value="true"></property>
+		<property name="testOnReturn" value="true"></property>
+		<property name="testWhileIdle" value="true"></property>
+		<property name="validationQuery" value="${db.validationQuery}"></property>
+	</bean>
+	<tx:annotation-driven transaction-manager="transactionManager" />
+<!-- 	Hibernate SessionFactory -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="configLocation" value="classpath:META-INF/orm/hibernate.cfg.xml">
+		</property>
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+<!-- 	基于Hiberante的事务管理器 -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
+      <property name="caches">
+         <set>
+            <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" p:name="simpleCache"/>
+            <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" p:name="default"/>
+         </set>
+      </property>
+   </bean>
+   
+   	
+<!-- 	基于注解的事务管理 -->
+	<task:annotation-driven />
+
+<!--通知bean-->
+<bean name="NoticeTimer" class="com.dreamer.time.NoticeTimer" init-method="voucherNotice" lazy-init="false">
+
+</bean>
+
+	<!--增加定时任务任务-->
+	<!--配置获取token任务-->
+	<bean id="job" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="tokenTimer"/>
+		<property name="targetMethod" value="doIt"/>
+	</bean>
+
+	<!--配置触发器-->
+	<bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+		<!-- see the example of method invoking job above -->
+		<property name="jobDetail" ref="job"/>
+		<!-- 10 seconds -->
+		<property name="startDelay" value="1000"/>
+		<!-- repeat every 50 seconds -->
+		<property name="repeatInterval" value="6000000"/>
+	</bean>
+
+
+	<!--&lt;!&ndash;配置发送通知任务&ndash;&gt;-->
+	<!--<bean id="job2" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+		<!--<property name="targetObject" ref="noticeTimer"/>-->
+		<!--<property name="targetMethod" value="voucherNotice"/>-->
+        <!--<property name="concurrent" value="false" />-->
+	<!--</bean>-->
+
+	<!--&lt;!&ndash;配置触发器&ndash;&gt;-->
+	<!--<bean id="simpleTrigger1" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">-->
+		<!--&lt;!&ndash; see the example of method invoking job above &ndash;&gt;-->
+		<!--<property name="jobDetail" ref="job2"/>-->
+		<!--&lt;!&ndash; 10 seconds &ndash;&gt;-->
+		<!--<property name="startDelay" value="1000"/>-->
+		<!--&lt;!&ndash; repeat every 50 seconds &ndash;&gt;-->
+		<!--<property name="repeatInterval" value="3000"/>-->
+	<!--</bean>-->
+
+	<!--<bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+		<!--<property name="jobDetail" ref="job"/>-->
+		<!--&lt;!&ndash; run every month  at 0.0 AM  每个月1号 0点执行 &ndash;&gt;-->
+		<!--<property name="cronExpression" value="0 0 0 1 * ? *"/>-->
+	<!--</bean>-->
+
+	<!--启动监听-->
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean" autowire="no"><!--加入autowire="no 不然报错-->
+		<property name="triggers">
+			<list>
+				<ref bean="simpleTrigger"/>
+				<!--<ref bean="simpleTrigger1"/>-->
+			</list>
+		</property>
+	</bean>
+	
+
+</beans:beans>

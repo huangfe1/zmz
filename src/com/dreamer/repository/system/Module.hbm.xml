@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.dreamer.domain.system">
+ <class batch-size="10" dynamic-insert="true" dynamic-update="true"
+  lazy="true" name="com.dreamer.domain.system.Module" table="module">
+  <id name="id" type="java.lang.Integer">
+   <column name="id"/>
+   <generator class="native"/>
+  </id>
+  <version generated="never" name="version" type="java.lang.Integer">
+   <column name="version">
+    <comment>数据版本号</comment>
+   </column>
+  </version>
+  <property generated="never" lazy="false" name="name" type="java.lang.String">
+   <column length="64" name="name" not-null="true">
+    <comment>模块名称</comment>
+   </column>
+  </property>
+  <many-to-one class="Module" fetch="join" lazy="proxy" name="parent"
+   not-found="ignore" not-null="false">
+   <column name="parent" not-null="false">
+    <comment>父模块</comment>
+   </column>
+  </many-to-one>
+  <property generated="never" lazy="false" name="url" type="java.lang.String">
+   <column length="128" name="url">
+    <comment>模块URL</comment>
+   </column>
+  </property>
+  <property generated="never" lazy="false" name="cssClass" type="java.lang.String">
+   <column length="64" name="css_class">
+    <comment>CSS类名</comment>
+   </column>
+  </property>
+  <property generated="never" lazy="false" name="leaf" type="java.lang.Boolean">
+   <column name="leaf">
+    <comment>是否叶子节点 1-是</comment>
+   </column>
+  </property>
+  <property generated="never" lazy="false" name="sequence"
+   type="java.lang.Integer" unique="true">
+   <column name="sequence">
+    <comment>在同级模块中的排列顺序</comment>
+   </column>
+  </property>
+  <property generated="never" lazy="false" name="updateTime" type="java.sql.Timestamp">
+   <column length="19" name="update_time">
+    <comment>更新时间戳</comment>
+   </column>
+  </property>
+  <bag batch-size="10" cascade="all" fetch="join" inverse="true"
+   lazy="true" name="children" order-by="sequence">
+   <key column="parent"/>
+   <one-to-many class="Module"/>
+  </bag>
+ </class>
+</hibernate-mapping>

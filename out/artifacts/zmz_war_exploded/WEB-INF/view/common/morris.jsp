@@ -1,0 +1,2 @@
+<script src="<%=request.getContextPath()%>/resources/bower_components/raphael/raphael-min.js"></script>
+<script src="<%=request.getContextPath()%>/resources/bower_components/morrisjs/morris.min.js"></script>

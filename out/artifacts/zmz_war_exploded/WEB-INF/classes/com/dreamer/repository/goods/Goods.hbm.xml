@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.dreamer.domain.goods">
+ <class dynamic-insert="true" dynamic-update="true" name="Goods" table="goods">
+  <id name="id" type="java.lang.Integer">
+   <column name="id"/>
+   <generator class="native"/>
+  </id>
+  <version generated="never" insert="true" name="version" type="integer">
+   <column name="version"/>
+  </version>
+  <property generated="never" lazy="false" name="name" type="java.lang.String">
+   <column length="64" name="name" not-null="true">
+    <comment>货物名称</comment>
+   </column>
+  </property>
+  <property generated="never" lazy="false" name="imgFile" type="java.lang.String">
+   <column length="64" name="img_file" not-null="false">
+    <comment>图片文件</comment>
+   </column>
+  </property>
+  <property name="detailImg" type="string" >
+   <column name="detailImg">
+    <comment>详情页名字</comment>
+   </column>
+  </property>
+  <property generated="never" lazy="false" name="spec" type="java.lang.String">
+   <column length="64" name="spec" not-null="false">
+    <comment>规格</comment>
+   </column>
+  </property>
+  <property generated="never" lazy="false" name="order" type="java.lang.Integer">
+   <column name="sequence">
+    <comment>排序</comment>
+   </column>
+  </property>
+  <property generated="never" lazy="false" name="currentBalance" type="java.lang.Integer">
+   <column name="current_balance">
+    <comment>当前余额</comment>
+   </column>
+  </property>
+  <property name="boxamount" type="java.lang.Integer">
+  <column name="boxamount">
+   <comment>每件数量</comment>
+  </column>
+   
+  </property>
+  <property generated="never" lazy="false" name="currentStock" type="java.lang.Integer">
+   <column name="current_stock">
+    <comment>当前库存</comment>
+   </column>
+  </property>
+  <property generated="never" lazy="false" name="alertStock" type="java.lang.Integer">
+   <column name="alert_stock">
+    <comment>最低库存量预警值</comment>
+   </column>
+  </property>
+  <property generated="never" lazy="false" name="updateTime" type="java.sql.Timestamp">
+   <column length="19" name="update_time">
+    <comment>更新时间戳</comment>
+   </column>
+  </property>
+  <property generated="never" lazy="false" name="pointFactor" type="java.lang.Double">
+   <column name="point_factor" precision="10">
+    <comment>积分系数</comment>
+   </column>
+  </property>
+
+  <property name="weight" lazy="false" type="java.lang.Double">
+   <column name="weight" precision="10">
+    <comment>产品的重量</comment>
+   </column>
+   
+  </property>
+  <property generated="never" lazy="false" name="retailPrice" type="java.lang.Double">
+   <column name="retail_price" precision="10">
+    <comment>零售价</comment>
+   </column>
+  </property>
+  <property generated="never" lazy="false" name="currentPoint" type="java.lang.Double">
+   <column name="current_point" precision="16">
+    <comment>当前积分</comment>
+   </column>
+  </property>
+  <property generated="never" lazy="true" name="benchmark" type="java.lang.Boolean">
+   <column name="benchmark">
+    <comment>是否为主打产品</comment>
+   </column>
+  </property>
+	<!--产品的类型 -->
+    <property generated="never" lazy="false" name="goodsType">
+			<column name="goodsType" not-null="false" default="0">
+				<comment>产品类型</comment>
+			</column>
+			<type name="org.hibernate.type.EnumType">
+				<param name="enumClass">com.dreamer.domain.goods.GoodsType</param>
+				<param name="type">4</param>
+				<param name="useNamed">false</param>
+			</type>
+		</property>
+	
+	<!--返利模式 -->
+      <property generated="never" lazy="false" name="voucher" type="java.lang.String">
+   <column length="125" name="voucher" not-null="false">
+    <comment>返利模式</comment>
+   </column>
+  </property>
+		
+  <!-- 产品属于哪个授权 -->
+  <one-to-one cascade="all"
+   class="com.dreamer.domain.authorization.AuthorizationType"
+   name="authorizationType" property-ref="goods"/>
+  <set cascade="save-update,all" inverse="true" name="prices"
+   order-by="agentLevel" sort="unsorted">
+   <key>
+    <column name="goods" not-null="true">
+     <comment>货物</comment>
+    </column>
+   </key>
+   <one-to-many class="com.dreamer.domain.goods.Price"/>
+  </set>
+ </class>
+</hibernate-mapping>

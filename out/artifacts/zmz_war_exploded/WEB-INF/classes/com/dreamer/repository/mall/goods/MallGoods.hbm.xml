@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.dreamer.domain.mall.goods.MallGoods" table="mall_goods" dynamic-insert="true" dynamic-update="true">
+		<id name="id" type="java.lang.Integer">
+			<column name="id" />
+			<generator class="native"></generator>
+		</id>
+		<version name="version" type="java.lang.Integer">
+			<column name="version">
+				<comment>数据版本号</comment>
+			</column>
+		</version>
+		<property name="name" type="java.lang.String">
+			<column name="name" length="64" not-null="true">
+				<comment>货物名称</comment>
+			</column>
+		</property>
+		<property name="shareName" type="java.lang.String">
+			<column name="shareName" length="64" not-null="true">
+				<comment>分享标题</comment>
+			</column>
+		</property>
+		<property name="activity" type="java.lang.Integer">
+			<column name="activity" >
+				<comment>是否活动</comment>
+			</column>
+		</property>
+		<property name="startTime" type="java.util.Date">
+			<column name="startTime">
+				<comment>活动时间</comment>
+			</column>
+		</property>
+        <property name="limitNumer" type="java.lang.Integer">
+            <column name="limitNumer">
+                <comment>限购数量</comment>
+            </column>
+        </property>
+		<property name="shareDetail" type="java.lang.String">
+			<column name="shareDetail" length="64" not-null="true">
+				<comment>分享描述</comment>
+			</column>
+		</property>
+		<property name="spec" type="java.lang.String">
+			<column name="spec" length="64">
+				<comment>规格</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="imgFile"
+			type="java.lang.String">
+			<column length="64" name="img_file" not-null="false">
+				<comment>图片文件</comment>
+			</column>
+		</property>
+		<property name="shelf" type="java.lang.Boolean">
+			<column name="shelf" not-null="true">
+				<comment>是否上架 1-是 0-否</comment>
+			</column>
+		</property>
+		<property name="updateTime" type="java.util.Date">
+			<column name="update_time" length="19">
+				<comment>更新时间戳</comment>
+			</column>
+		</property>
+		<property name="voucher" type="java.lang.Double">
+			<column name="voucher" not-null="true">
+				<comment>每商品赠送的代金券</comment>
+			</column>
+		</property>
+		<property name="sequence" type="java.lang.Integer">
+			<column name="sequence">
+				<comment>排序</comment>
+			</column>
+		</property>
+		<property name="price" type="java.lang.Double">
+			<column name="price" precision="10" scale="4" not-null="true">
+				<comment>全额价格</comment>
+			</column>
+		</property>
+
+        <property name="profit" type="java.lang.Double">
+            <column name="profit" precision="10" scale="4" not-null="true">
+                <comment>实际利润</comment>
+            </column>
+        </property>
+		<property name="pointPrice" type="java.lang.Double">
+			<column name="point_price" precision="10">
+				<comment>积分价格 现金+积分价格形式</comment>
+			</column>
+		</property>
+		<property name="moneyPrice" type="java.lang.Double">
+			<column name="money_price" precision="10" scale="4">
+				<comment>现金价格 现金+积分价格形式</comment>
+			</column>
+		</property>
+
+		<property name="vouchers" type="java.lang.String" >
+			<column name="vouchers">
+				<comment>返利制度</comment>
+			</column>
+
+		</property>
+
+		<property name="detailImg" type="string" >
+			<column name="detailImg">
+				<comment>详情页名字</comment>
+			</column>
+		</property>
+
+		<property name="benefitPoints" type="java.lang.Double" >
+			<column name="benefit_points">
+				<comment>返还的福利积分</comment>
+			</column>
+		</property>
+		<property name="stockQuantity" type="java.lang.Integer"   >
+			<column name="stock_quantity" not-null="false" default="0" >
+				<comment>当前库存</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

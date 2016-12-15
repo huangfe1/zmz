@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.dreamer.domain.goods">
+    <class name="Price" table="price">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="native"></generator>
+        </id>
+        <version name="version" type="java.lang.Integer">
+        	 <column name="version">
+                <comment>数据版本号</comment>
+            </column>
+        </version>
+        <many-to-one name="goods" class="com.dreamer.domain.goods.Goods" fetch="select">
+            <column name="goods" not-null="true">
+                <comment>货物</comment>
+            </column>
+        </many-to-one>
+        <many-to-one name="agentLevel" class="com.dreamer.domain.user.AgentLevel" fetch="select">
+            <column name="agent_level" not-null="true">
+                <comment>代理等级</comment>
+            </column>
+        </many-to-one>
+        <property name="price" type="java.lang.Double">
+            <column name="price" precision="10" scale="4" not-null="true">
+                <comment>价格</comment>
+            </column>
+        </property>
+        <property name="threshold" type="java.lang.Integer">
+            <column name="threshold" not-null="true">
+                <comment>晋升到本等级需要购买的货物量</comment>
+            </column>
+        </property>
+        <property name="updateTime" type="java.util.Date">
+            <column name="update_time" length="19">
+                <comment>更新时间戳</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

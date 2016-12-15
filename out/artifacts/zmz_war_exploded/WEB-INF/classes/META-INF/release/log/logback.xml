@@ -1,0 +1,40 @@
+<configuration>
+<property name="APP_NAME" value="dreamer" />
+	<contextName>${APP_NAME}</contextName>
+	<contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+		<resetJUL>true</resetJUL>
+	</contextListener>
+	<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+		<Target>System.out</Target>
+		<encoder charset="UTF-8">
+			<pattern>%d %5p %c{1}:%L %m%n</pattern>
+		</encoder>
+	</appender>
+	<appender name="file"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!--See also http://logback.qos.ch/manual/appenders.html#RollingFileAppender -->
+		<File>logs/${APP_NAME}.log</File>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss} [%c][%p] %m%n</pattern>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<maxIndex>3</maxIndex>
+			<FileNamePattern>logs/${APP_NAME}.log.%i</FileNamePattern>
+		</rollingPolicy>
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<MaxFileSize>2048KB</MaxFileSize>
+		</triggeringPolicy>
+	</appender>
+	<logger name="cn.allpos" level="WARN" />
+	<logger name="org.springframework" level="WARN" />
+	<logger name="java.sql.ResultSet" level="WARN" />
+	<logger name="java.sql.Connection" level="WARN" />
+	<logger name="java.sql.PreparedStatement" level="WARN" />
+	<logger name="org.springframework.web" level="WARN" />
+	<logger name="org.springframework.jdbc" level="WARN" />
+	<root level="WARN">
+		<appender-ref ref="stdout" />
+		<appender-ref ref="file" />
+	</root>
+</configuration>

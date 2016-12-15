@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.dreamer.domain.user">
+	<class name="Accounts" table="accounts">
+		<id name="id" type="java.lang.Integer">
+			<column name="id" />
+			<generator class="native" />
+		</id>
+		<version generated="never" name="version" type="java.lang.Integer">
+			<column name="version">
+				<comment>数据版本号</comment>
+			</column>
+		</version>
+		<many-to-one class="com.dreamer.domain.user.User" fetch="select"
+			lazy="proxy" name="user" not-found="ignore">
+			<column name="user" not-null="true">
+				<comment>账户所属人</comment>
+			</column>
+		</many-to-one>
+		<property generated="never" insert="true" lazy="false" name="updateTime"
+			type="java.util.Date" update="true">
+			<column length="19" name="update_time">
+				<comment>更新时间戳</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="pointsBalance"
+			type="java.lang.Double">
+			<column name="points_balance" precision="16">
+				<comment>当前积分余额</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="voucherBalance"
+			type="java.lang.Double">
+			<column name="voucher_balance" precision="10">
+				<comment>代金券余额</comment>
+			</column>
+		</property>
+		<!--预存款-->
+		<property name="advanceBalance" type="java.lang.Double">
+			<column name="advance_balance" precision="10" scale="2" not-null="false" default="0.0">
+				<comment>预存款</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="benefitPointsBalance"
+			type="java.lang.Double">
+			<column name="benefit_points_balance" precision="16">
+				<comment>福利积分余额</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

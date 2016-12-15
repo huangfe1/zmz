@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.dreamer.domain.user">
+    <class name="PointsTransfer" table="transfer_point">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="native"></generator>
+        </id>
+        <version name="version" type="java.lang.Integer">
+            <column name="version">
+                <comment>数据版本号</comment>
+            </column>
+        </version>
+        <many-to-one name="userByToAgent" class="com.dreamer.domain.user.User" fetch="select" not-found="ignore">
+            <column name="to_agent" not-null="true">
+                <comment>积分转入方</comment>
+            </column>
+        </many-to-one>
+        <many-to-one name="userByFromAgent" class="com.dreamer.domain.user.User" fetch="select" not-found="ignore">
+            <column name="from_agent" not-null="true">
+                <comment>积分转出方</comment>
+            </column>
+        </many-to-one>
+        <property name="transferTime" type="java.util.Date">
+            <column name="transfer_time" length="19">
+                <comment>积分装让操作时间</comment>
+            </column>
+        </property>
+        <property name="updateTime" type="java.util.Date">
+            <column name="update_time" length="19">
+                <comment>更新时间戳</comment>
+            </column>
+        </property>
+        <property name="remark" type="java.lang.String">
+            <column name="remark" length="256">
+                <comment>备注信息</comment>
+            </column>
+        </property>
+        <property name="point" type="java.lang.Double">
+            <column name="point" precision="10" not-null="true">
+                <comment>本次转让的积分</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

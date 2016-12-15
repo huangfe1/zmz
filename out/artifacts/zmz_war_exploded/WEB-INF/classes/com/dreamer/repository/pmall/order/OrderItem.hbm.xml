@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.dreamer.domain.pmall.order">
+	<class name="OrderItem" table="pointsmall_order_item" dynamic-insert="true" dynamic-update="true">
+		<id name="id" type="java.lang.Integer">
+			<column name="id" />
+			<generator class="native" />
+		</id>
+		<property generated="never" lazy="false" name="goodsName"
+				  type="string">
+			<column name="goods_name" />
+		</property>
+		<property generated="never" lazy="false" name="goodsSpec"
+				  type="string">
+			<column name="goods_spec" />
+		</property>
+		<property generated="never" lazy="false" name="goodsId"
+				  type="integer">
+			<column name="goods_id" />
+		</property>
+
+		<property generated="never" lazy="false" name="benefitPoints"
+				  type="double">
+			<column name="benefit_points" />
+		</property>
+		<property generated="never" lazy="false" name="voucher"
+				  type="double">
+			<column name="voucher" />
+		</property>
+
+		<property generated="never" lazy="false" name="vouchers"
+				  type="string">
+			<column name="vouchers" />
+		</property>
+
+
+		<property generated="never" lazy="false" name="quantity"
+				  type="int">
+			<column name="quantity" />
+		</property>
+		<property generated="never" lazy="false" name="price" type="double">
+			<column name="price" />
+		</property>
+		<property generated="never" lazy="false" name="pointsPrice"
+				  type="double">
+			<column name="points_price" />
+		</property>
+		<property generated="never" lazy="false" name="moneyPrice"
+				  type="double">
+			<column name="money_price" />
+		</property>
+		<property generated="never" lazy="false" name="discountAmount"
+				  type="double">
+			<column name="discount_amount" />
+		</property>
+		<many-to-one name="order" column="order_id" class="Order" ></many-to-one>
+	</class>
+</hibernate-mapping>

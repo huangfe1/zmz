@@ -1,0 +1,2 @@
+<script type="text/javascript" src="<%=request.getContextPath()%>/resources/bower_components/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/resources/bower_components/metro/build/js/metro.min.js"></script>

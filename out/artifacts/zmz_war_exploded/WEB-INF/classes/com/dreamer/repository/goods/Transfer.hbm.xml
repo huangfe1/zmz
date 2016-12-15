@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.dreamer.domain.goods">
+ <class name="Transfer" table="transfer_goods" dynamic-insert="true" dynamic-update="true">
+  <id name="id" type="java.lang.Integer">
+   <column name="id"/>
+   <generator class="native"/>
+  </id>
+  <version generated="never" name="version" type="java.lang.Integer">
+   <column name="version">
+    <comment>数据版本号</comment>
+   </column>
+  </version>
+  <many-to-one cascade="save-update"
+   class="com.dreamer.domain.user.User" fetch="select" lazy="false" name="userByToAgent">
+   <column name="to_agent" not-null="true">
+    <comment>申请转货人(转入方)</comment>
+   </column>
+  </many-to-one>
+  <many-to-one cascade="save-update"
+   class="com.dreamer.domain.user.User" fetch="select" lazy="false" name="userByFromAgent">
+   <column name="from_agent" not-null="true">
+    <comment>转货人(转出方)</comment>
+   </column>
+  </many-to-one>
+  <property generated="never" lazy="false" name="quantity" type="java.lang.Integer">
+   <column default="0" name="quantity" precision="10" sql-type="INTEGER">
+    <comment>转货数量</comment>
+   </column>
+  </property>
+  <property generated="never" lazy="false" name="status">
+   <column length="32" name="status" not-null="true">
+    <comment>转货交易状态</comment>
+   </column>
+   <type name="org.hibernate.type.EnumType">
+    <param name="enumClass">com.dreamer.domain.goods.GoodsTransferStatus</param>
+    <param name="type">12</param>
+    <param name="useNamed">true</param>
+   </type>
+  </property>
+  <property generated="never" lazy="false" name="applyTime" type="java.sql.Timestamp">
+   <column length="19" name="apply_time" not-null="true">
+    <comment>申请时间</comment>
+   </column>
+  </property>
+  <property generated="never" lazy="false" name="transferTime" type="java.sql.Timestamp">
+   <column length="19" name="transfer_time">
+    <comment>转货确认操作时间</comment>
+   </column>
+  </property>
+  <property generated="never" lazy="false" name="updateTime" type="java.sql.Timestamp">
+   <column length="19" name="update_time">
+    <comment>更新时间戳</comment>
+   </column>
+  </property>
+  <property generated="never" lazy="false" name="remittance" type="java.lang.String">
+   <column length="256" name="remittance" not-null="true">
+    <comment>汇款信息</comment>
+   </column>
+  </property>
+  <property generated="never" lazy="false" name="remark" type="java.lang.String">
+   <column length="256" name="remark">
+    <comment>备注信息</comment>
+   </column>
+  </property>
+  <property generated="never" lazy="false" name="back" type="java.lang.Boolean">
+   <column default="0" name="back">
+    <comment>是否返转货</comment>
+   </column>
+  </property>
+
+  <property generated="never" lazy="false" name="useVoucher" type="java.lang.Boolean">
+   <column default="0" name="useVoucher">
+    <comment>是否使用代金券</comment>
+   </column>
+  </property>
+  <property generated="never" lazy="false" name="points" type="java.lang.Double">
+   <column name="point" precision="10" scale="2" sql-type="DECIMAL">
+    <comment>本次转货交易产生的积分</comment>
+   </column>
+  </property>
+  <property generated="never" lazy="false" name="voucher" type="java.lang.Double">
+   <column name="voucher" precision="10" not-null="false" default="0">
+    <comment>本次转货交易使用的代金券</comment>
+   </column>
+  </property>
+  <!--本次交易使用的预存款-->
+  <property generated="never" lazy="false" name="advance" type="java.lang.Double">
+   <column name="advance" precision="10" not-null="false" default="0">
+    <comment>本次转货交易使用的预存款</comment>
+   </column>
+  </property>
+  <map cascade="all" name="items" sort="unsorted" table="transfer_item">
+   <key column="transfer"/>
+   <map-key column="goods_id" type="int"/>
+   <composite-element class="TransferItem">
+    <property generated="never" lazy="false" name="goodsName" type="string">
+     <column name="goods_name"/>
+    </property>
+    <property generated="never" lazy="false" name="spec" type="string">
+     <column name="spec"/>
+    </property>
+    <property generated="never" lazy="false" name="price" type="java.lang.Double">
+     <column name="price"/>
+    </property>
+    <property generated="never" lazy="false" name="points" type="java.lang.Double">
+     <column name="points"/>
+    </property>
+    <property generated="never" lazy="false" name="quantity" type="java.lang.Integer">
+     <column name="quantity"/>
+    </property>
+    <property generated="never" lazy="false" name="priceLevelName" type="java.lang.String">
+     <column name="price_level"/>
+    </property>
+    
+   </composite-element>
+  </map>
+  
+  <!-- add by hf -->
+    
+    <property generated="never" lazy="false" name="applyOrigin">
+			<column name="origin" not-null="true">
+				<comment>请求来源</comment>
+			</column>
+			<type name="org.hibernate.type.EnumType">
+				<param name="enumClass">com.dreamer.domain.goods.TransferApplyOrigin</param>
+				<param name="type">4</param>
+				<param name="useNamed">false</param>
+			</type>
+		</property>
+  
+ </class>
+</hibernate-mapping>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.dreamer.domain.goods">
+    <class name="DeliveryItem" table="delivery_item">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="native"></generator>
+        </id>
+        <version name="version" type="java.lang.Integer">
+            <column name="version">
+                <comment>数据版本号</comment>
+            </column>
+        </version>
+        <many-to-one name="goods" class="com.dreamer.domain.goods.Goods" fetch="select" not-found="ignore">
+            <column name="goods" not-null="true">
+                <comment>货物编码</comment>
+            </column>
+        </many-to-one>
+        <many-to-one name="deliveryNote" class="com.dreamer.domain.goods.DeliveryNote" fetch="select" not-found="ignore">
+            <column name="delivery_note">
+                <comment>所属的发货申请单</comment>
+            </column>
+        </many-to-one>
+        <property name="quantity" type="java.lang.Integer">
+            <column name="quantity" not-null="true">
+                <comment>申请发货的数量</comment>
+            </column>
+        </property>
+        <property name="price" type="java.lang.Double">
+            <column name="price" not-null="false">
+                <comment>申请发货时的数量</comment>
+            </column>
+        </property>
+        <property name="point" type="java.lang.Double">
+            <column name="point">
+                <comment>计算的积分</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,2 @@
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/bower_components/metro/build/css/metro.min.css"/>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/bower_components/metro/build/css/metro-icons.min.css"/>

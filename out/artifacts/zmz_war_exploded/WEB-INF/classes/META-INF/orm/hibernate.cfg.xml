@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+                                         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory name="dreamer">
+		<property name="default_schema">dreamer</property>
+		<property name="show_sql">false</property>
+		<property name="format_sql">true</property>
+		<property name="use_sql_comments">true</property>
+		<property name="jdbc.batch_size">50</property>
+		<property name="order_updates">true</property>
+		<property name="order_inserts">true</property>
+		<property name="jdbc.fetch_size">100</property>
+		<property name="max_fetch_depth">3</property>
+		<property name="cache.use_second_level_cache">false</property>
+		<property name="cache.region.factory_class">
+			org.hibernate.cache.ehcache.EhCacheRegionFactory
+		</property>
+		<property name="cache.use_query_cache">true</property>
+		<property name="cache.jbc.query.localonly">true</property>
+		<property
+			name="hibernate.cache.default_cache_concurrency_strategy">
+			read-only
+		</property>
+		<property name="javax.persistence.validation.mode">
+			none
+		</property>
+		<property name="dialect">
+			org.hibernate.dialect.MySQL5InnoDBDialect
+		</property>
+		<property name="connection.useUnicode">true</property>
+		<property name="connection.characterEncoding">UTF-8</property>
+		<property name="hbm2ddl.auto">update</property>
+		<!-- 
+			<class-cache class="com.mll.lexton.product.ProductCategory"
+			include="all" usage="nonstrict-read-write"/>
+			<collection-cache
+			collection="com.mll.lexton.product.ProductCategory.children" usage="nonstrict-read-write"/>
+			<class-cache class="com.mll.lexton.product.Brand" include="all" usage="nonstrict-read-write"/>
+		-->
+
+		<mapping resource="com/dreamer/repository/goods/Goods.hbm.xml" />
+		<mapping resource="com/dreamer/repository/goods/Price.hbm.xml" />
+		<mapping resource="com/dreamer/repository/user/User.hbm.xml" />
+		<mapping
+			resource="com/dreamer/repository/user/AgentLevel.hbm.xml" />
+		<mapping
+			resource="com/dreamer/repository/account/GoodsAccount.hbm.xml" />
+		<mapping
+			resource="com/dreamer/repository/account/VoucherRecord.hbm.xml" />
+		<mapping
+				resource="com/dreamer/repository/account/AdvanceRecord.hbm.xml" />
+		<mapping
+			resource="com/dreamer/repository/authorization/Authorization.hbm.xml" />
+		<mapping
+			resource="com/dreamer/repository/authorization/AuthorizationType.hbm.xml" />
+		<mapping
+			resource="com/dreamer/repository/goods/StockBlotter.hbm.xml" />
+		<mapping
+			resource="com/dreamer/repository/goods/DeliveryNote.hbm.xml" />
+		<mapping
+			resource="com/dreamer/repository/goods/DeliveryItem.hbm.xml" />
+		<mapping
+			resource="com/dreamer/repository/goods/Transfer.hbm.xml" />
+		<mapping
+			resource="com/dreamer/repository/system/SystemParameter.hbm.xml" />
+		<mapping
+			resource="com/dreamer/repository/user/Accounts.hbm.xml" />
+		<mapping
+			resource="com/dreamer/repository/user/PointsTransfer.hbm.xml" />
+			<mapping
+			resource="com/dreamer/repository/user/VoucherTransfer.hbm.xml" />
+		<mapping
+				resource="com/dreamer/repository/user/AdvanceTransfer.hbm.xml" />
+		<mapping
+			resource="com/dreamer/repository/goods/SecurityCode.hbm.xml" />
+		<mapping
+				resource="com/dreamer/repository/goods/Logistics.hbm.xml" />
+		<mapping
+			resource="com/dreamer/repository/mall/goods/MallGoods.hbm.xml" />
+		<mapping
+			resource="com/dreamer/repository/system/Module.hbm.xml" />
+		<mapping resource="com/dreamer/repository/system/Role.hbm.xml" />
+		<mapping
+			resource="com/dreamer/repository/pmall/order/Order.hbm.xml" />
+		<mapping
+				resource="com/dreamer/repository/pmall/order/OrderItem.hbm.xml" />
+		<mapping
+			resource="com/dreamer/repository/mall/goods/MallGoodsStockBlotter.hbm.xml" />
+
+		<class-cache class="com.dreamer.domain.system.Module"
+			include="all" usage="nonstrict-read-write" />
+		<collection-cache
+			collection="com.dreamer.domain.system.Module.children"
+			usage="nonstrict-read-write" />
+	</session-factory>
+</hibernate-configuration>

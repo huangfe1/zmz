@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="1c4ded01-fdc2-460e-858d-5ef635748bac" name="dreamer" url="http://211.149.240.62">
+        <fileTransfer host="211.149.240.62" port="21" rootFolder="/apps/dreamer" password="dfc2dfdfdfcbdfc4dfcddfccdfcfdfc3df9adf92" username="roothxf">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

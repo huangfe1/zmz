@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.dreamer.domain.authorization">
+	<class name="AuthorizationType" table="authorization_type">
+		<id name="id" type="java.lang.Integer">
+			<column name="id" />
+			<generator class="native" />
+		</id>
+		<version generated="never" name="version" type="java.lang.Integer">
+			<column name="version">
+				<comment>数据版本号</comment>
+			</column>
+		</version>
+		<property generated="never" lazy="false" name="name"
+			type="java.lang.String">
+			<column length="64" name="name" not-null="true">
+				<comment>授权类型名称</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="remark"
+			type="java.lang.String">
+			<column length="128" name="remark">
+				<comment>说明</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="order"
+			type="java.lang.Integer">
+			<column name="sequence">
+				<comment>授权类型排序</comment>
+			</column>
+		</property>
+		<!-- 授权对应的产品-->
+		<many-to-one name="goods" class="com.dreamer.domain.goods.Goods" cascade="delete"
+			fetch="select" lazy="proxy" not-found="ignore" not-null="true" unique="true">
+			<column name="goods"></column>
+		</many-to-one>
+	</class>
+</hibernate-mapping>

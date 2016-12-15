@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.dreamer.domain.pmall.order">
+	<class name="Order" table="pointsmall_order" dynamic-insert="true" dynamic-update="true">
+		<id name="id" type="java.lang.Integer">
+			<column name="id" />
+			<generator class="native" />
+		</id>
+		<version generated="never" name="version" type="java.lang.Integer">
+			<column name="version">
+				<comment>数据版本号</comment>
+			</column>
+		</version>
+		<many-to-one class="com.dreamer.domain.user.Agent" fetch="select"
+			name="user">
+			<column name="agent">
+				<comment>下单代理</comment>
+			</column>
+		</many-to-one>
+		<property generated="never" lazy="false" name="orderNo"
+			type="java.lang.String">
+			<column length="64" name="order_no" not-null="true" unique="true">
+				<comment>订单编号</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="orderTime"
+			type="java.sql.Timestamp">
+			<column length="19" name="order_time">
+				<comment>下单时间</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="receiveTime"
+			type="java.sql.Timestamp">
+			<column length="19" name="receive_time">
+				<comment>收货时间</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="status">
+			<column length="32" name="status">
+				<comment>订单状态</comment>
+			</column>
+			<type name="org.hibernate.type.EnumType">
+				<param name="enumClass">com.dreamer.domain.pmall.order.OrderStatus</param>
+				<param name="type">4</param>
+				<param name="useNamed">false</param>
+			</type>
+		</property>
+		<property generated="never" lazy="false" name="paymentWay">
+			<column name="payment_way">
+				<comment>订单支付方式</comment>
+			</column>
+			<type name="org.hibernate.type.EnumType">
+				<param name="enumClass">com.dreamer.domain.pmall.order.PaymentWay</param>
+				<param name="type">4</param>
+				<param name="useNamed">false</param>
+			</type>
+		</property>
+		<property generated="never" lazy="false" name="paymentStatus">
+			<column name="payment_status">
+				<comment>订单支付状态</comment>
+			</column>
+			<type name="org.hibernate.type.EnumType">
+				<param name="enumClass">com.dreamer.domain.pmall.order.PaymentStatus</param>
+				<param name="type">4</param>
+				<param name="useNamed">false</param>
+			</type>
+		</property>
+		<property generated="never" lazy="false" name="acknowledgmentWay">
+			<column name="acknowledgment_way">
+				<comment>收货确认方式</comment>
+			</column>
+			<type name="org.hibernate.type.EnumType">
+				<param name="enumClass">com.dreamer.domain.pmall.order.AcknowledgmentWay</param>
+				<param name="type">4</param>
+				<param name="useNamed">false</param>
+			</type>
+		</property>
+		<property generated="never" lazy="false" name="consignee"
+			type="java.lang.String">
+			<column length="64" name="consignee">
+				<comment>收货人</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="shippingAddress"
+			type="java.lang.String">
+			<column length="256" name="shipping_address">
+				<comment>收货地址</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="postCode"
+			type="java.lang.String">
+			<column length="8" name="post_code">
+				<comment>邮政编码</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="mobile"
+			type="java.lang.String">
+			<column length="16" name="mobile">
+				<comment>收货联系电话</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="discountAmount"
+			type="java.lang.Double">
+			<column default="0.00" name="discount_amount" precision="6">
+				<comment>优惠金额</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="logisticsCode"
+			type="java.lang.String">
+			<column length="64" name="logistics_code">
+				<comment>物流编号</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="logisticsFee"
+			type="java.lang.Double">
+			<column name="logistics_fee" precision="6">
+				<comment>物流费用</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="logistics"
+			type="java.lang.String">
+			<column length="64" name="logistics">
+				<comment>物流公司</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="invoiceTitle"
+			type="java.lang.String">
+			<column length="64" name="invoice_title">
+				<comment>发票抬头</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="invoiceItem"
+			type="java.lang.String">
+			<column length="128" name="invoice_item">
+				<comment>发票内容</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="remark"
+			type="java.lang.String">
+			<column length="64" name="remark">
+				<comment>订单备注</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="updateTime"
+			type="java.sql.Timestamp">
+			<column length="19" name="update_time">
+				<comment>更新时间戳</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="paymentTime"
+			type="java.util.Date">
+			<column length="19" name="payment_time">
+				<comment>付款时间</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="shippingTime"
+			type="java.util.Date">
+			<column length="19" name="shipping_time">
+				<comment>发货时间</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="shippingOperator"
+			type="java.lang.String">
+			<column length="64" name="shipping_operator">
+				<comment>发货人</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="revokeReason"
+			type="java.lang.String">
+			<column length="32" name="revoke_reason">
+				<comment>撤销原因</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="revokeOperator"
+			type="java.lang.String">
+			<column length="64" name="revoke_operator">
+				<comment>撤销操作人</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="refundReason"
+			type="java.lang.String">
+			<column length="64" name="refund_reason">
+				<comment>退款原因</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="refundOperator"
+			type="java.lang.String">
+			<column length="64" name="refund_operator">
+				<comment>退款操作人</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="refundTime"
+			type="java.sql.Timestamp">
+			<column length="19" name="refund_time">
+				<comment>退款时间</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="voucher"
+			type="java.lang.Double">
+			<column name="voucher" not-null="true">
+				<comment>本订单赠送的代金券</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="benefitPoints"
+			type="java.lang.Double">
+			<column name="benefit_points" precision="10">
+				<comment>本订单返的福利积分</comment>
+			</column>
+		</property>
+		<map cascade="all" name="items" sort="unsorted" >
+			<key column="order_id" />
+			<map-key column="goods_id" type="int" />
+			<one-to-many class="OrderItem"/>
+			<!--<composite-element class="OrderItem">-->
+				<!--<property generated="never" lazy="false" name="goodsName"-->
+					<!--type="string">-->
+					<!--<column name="goods_name" />-->
+				<!--</property>-->
+				<!--<property generated="never" lazy="false" name="goodsSpec"-->
+					<!--type="string">-->
+					<!--<column name="goods_spec" />-->
+				<!--</property>-->
+				<!--<property generated="never" lazy="false" name="benefitPoints"-->
+					<!--type="double">-->
+					<!--<column name="benefit_points" />-->
+				<!--</property>-->
+				<!--<property generated="never" lazy="false" name="voucher"-->
+					<!--type="double">-->
+					<!--<column name="voucher" />-->
+				<!--</property>-->
+
+                <!--<property generated="never" lazy="false" name="vouchers"-->
+                          <!--type="string">-->
+                    <!--<column name="vouchers" />-->
+                <!--</property>-->
+
+
+				<!--<property generated="never" lazy="false" name="quantity"-->
+					<!--type="int">-->
+					<!--<column name="quantity" />-->
+				<!--</property>-->
+				<!--<property generated="never" lazy="false" name="price" type="double">-->
+					<!--<column name="price" />-->
+				<!--</property>-->
+				<!--<property generated="never" lazy="false" name="pointsPrice"-->
+					<!--type="double">-->
+					<!--<column name="points_price" />-->
+				<!--</property>-->
+				<!--<property generated="never" lazy="false" name="moneyPrice"-->
+					<!--type="double">-->
+					<!--<column name="money_price" />-->
+				<!--</property>-->
+				<!--<property generated="never" lazy="false" name="discountAmount"-->
+					<!--type="double">-->
+					<!--<column name="discount_amount" />-->
+				<!--</property>-->
+			<!--</composite-element>-->
+		</map>
+	</class>
+</hibernate-mapping>

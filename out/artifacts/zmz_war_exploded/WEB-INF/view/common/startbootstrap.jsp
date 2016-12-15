@@ -1,0 +1,2 @@
+<script src="<%=request.getContextPath()%>/resources/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+<script src="<%=request.getContextPath()%>/resources/startbootstrap-admin/dist/js/sb-admin-2.js"></script>

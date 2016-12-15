@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.dreamer.domain.authorization">
+	<class name="Authorization" table="authorization">
+		<id name="id" type="java.lang.Integer">
+			<column name="id" />
+			<generator class="native"></generator>
+		</id>
+		<version name="version" type="java.lang.Integer">
+			<column name="version">
+				<comment>数据版本号</comment>
+			</column>
+		</version>
+		<many-to-one name="agent" class="com.dreamer.domain.user.Agent"
+			fetch="select" not-found="ignore">
+			<column name="agent" not-null="true">
+				<comment>授权给予的代理</comment>
+			</column>
+		</many-to-one>
+		<many-to-one name="authorizationType" class="AuthorizationType"
+			fetch="select" not-found="ignore">
+			<column name="authorization_type" not-null="true">
+				<comment>授权类型</comment>
+			</column>
+		</many-to-one>
+		<property name="status" generated="never" lazy="false">
+			<column length="16" name="status">
+				<comment>授权状态</comment>
+			</column>
+			<type name="org.hibernate.type.EnumType">
+				<param name="enumClass">com.dreamer.domain.user.AgentStatus</param>
+				<param name="type">12</param>
+				<param name="useNamed">true</param>
+			</type>
+		</property>
+		<property name="updateTime" type="java.util.Date">
+			<column name="update_time" length="19">
+				<comment>更新时间戳</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.dreamer.domain.account">
+	<class name="com.dreamer.domain.account.AdvanceRecord" table="advance_record">
+		<id name="id" type="java.lang.Integer">
+			<column name="id" />
+			<generator class="native" />
+		</id>
+
+		
+		<many-to-one name="agent" class="com.dreamer.domain.user.User"
+			fetch="select" not-found="ignore" not-null="true">
+			<column name="agent" >
+				<comment>记录属于的代理</comment>
+			</column>
+		</many-to-one>
+		
+		
+		<property generated="never" lazy="false" name="advance"
+			type="java.lang.Double">
+			<column name="advance" not-null="true">
+				<comment>预存款数量</comment>
+			</column>
+		</property>
+		
+		<property generated="never" lazy="false" name="advance_now"
+			type="java.lang.Double">
+			<column name="advance_now" not-null="true">
+				<comment>变更后预存款数量</comment>
+			</column>
+		</property>
+	
+		<property generated="never" lazy="false" name="more" type="java.lang.String">
+   			<column length="64" name="more" not-null="true">
+   			 <comment>更多</comment>
+   			</column>
+  		</property>
+	
+			<property generated="never" lazy="false" name="type"
+			type="java.lang.Integer">
+			<column name="type" not-null="true">
+				<comment>类型</comment>
+			</column>
+		</property>
+
+		
+		<property generated="never" lazy="false" name="updateTime"
+			type="java.util.Date">
+			<column length="19" name="update_time">
+				<comment>更新时间戳</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

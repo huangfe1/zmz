@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.dreamer.domain.system">
+ <class name="SystemParameter" table="system_parameter">
+  <cache include="all" region="system-config" usage="read-write"/>
+  <id name="code" type="java.lang.String">
+   <column length="8" name="code" not-null="true" unique="true"/>
+   <generator class="assigned"/>
+  </id>
+  <version generated="never" name="version" type="java.lang.Integer">
+   <column name="version">
+    <comment>数据版本号</comment>
+   </column>
+  </version>
+  <property generated="never" lazy="false" name="paramValue" type="java.lang.String">
+   <column length="64" name="param_value" not-null="true">
+    <comment>参数值</comment>
+   </column>
+  </property>
+  <property generated="never" lazy="false" name="name" type="java.lang.String">
+   <column length="64" name="name">
+    <comment>参数名称</comment>
+   </column>
+  </property>
+  <property generated="never" lazy="false" name="remark" type="java.lang.String">
+   <column length="128" name="remark">
+    <comment>参数说明</comment>
+   </column>
+  </property>
+ </class>
+</hibernate-mapping>
