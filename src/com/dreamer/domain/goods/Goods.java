@@ -27,6 +27,7 @@ public class Goods implements java.io.Serializable {
 	private Integer currentStock;
 	private Integer alertStock;
 	private Timestamp updateTime;
+	private Integer shelf;
 	private Integer version;
 	private Double pointFactor;
 	private Double currentPoint;
@@ -134,8 +135,16 @@ public class Goods implements java.io.Serializable {
 		setCurrentStock(currentStock+added);
 		return getCurrentStock();
 	}
-	
-	public Integer deductCurrentStock(Integer deduct){
+
+    public Integer getShelf() {
+        return shelf;
+    }
+
+    public void setShelf(Integer shelf) {
+        this.shelf = shelf;
+    }
+
+    public Integer deductCurrentStock(Integer deduct){
 		if(deduct>getCurrentStock()){
 			throw new ApplicationException("货物总库存不足");
 		}

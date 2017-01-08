@@ -56,35 +56,63 @@ nav .thumbnail {
 <jsp:include page="/WEB-INF/view/mall/mall_menu.jsp"></jsp:include>
 	<div class="container" id="nav">
 		<div class="row">
-			<div class="col-xs-4">
+			<div class="col-xs-3">
 				<a class="thumbnail" href="<c:url value='/dmz/vmall/index.html'/>"> <img data-src="" alt=""
 					src="<c:url value='/resources/images/user.jpg'/>"
 					data-holder-rendered="true">
 					<div class="caption">
-						<h6 class="text-center">购物首页</h6>
+						<h6 class="text-center">筑美商城</h6>
 					</div>
 				</a>
 			</div>
-			<div class="col-xs-4">
-				<a class="thumbnail" href="<c:url value='/vmall/uc/dmz/promoCode.html/${user.agentCode}'/>" > <img data-src="" alt=""
-					src="<c:url value='/resources/images/tuiguang.jpg'/>"
-					data-holder-rendered="true">
+			<div class="col-xs-3">
+				<a class="thumbnail" href="<c:url value='/dmz/tmall/index.html'/>"> <img data-src="" alt=""
+																						 src="<c:url value='/resources/images/user.jpg'/>"
+																						 data-holder-rendered="true">
 					<div class="caption">
-						<h6 class="text-center">推广码</h6>
+						<h6 class="text-center">和之初商城</h6>
 					</div>
 				</a>
 			</div>
-			<div class="col-xs-4">
-				<a class="thumbnail" href="<c:url value='/vmall/shopcart/index.html'/>"> <img data-src="" alt=""
-					src="<c:url value='/resources/images/shopCart.jpg'/>"
-					data-holder-rendered="true">
+			<div class="col-xs-3">
+				<a class="thumbnail" href="<c:url value='/dmz/pmall/index.html'/>"> <img data-src="" alt=""
+																						 src="<c:url value='/resources/images/user.jpg'/>"
+																						 data-holder-rendered="true">
 					<div class="caption">
-						<h6 class="text-center">
-							购物车<span class="badge">${shopcart.quantity}</span>
-						</h6>
+						<h6 class="text-center">积分商城</h6>
 					</div>
 				</a>
 			</div>
+			<div class="col-xs-3">
+				<a class="thumbnail" href="<c:url value='/dmz/pmall/tc_index.html'/>"> <img data-src="" alt=""
+																							src="<c:url value='/resources/images/user.jpg'/>"
+																							data-holder-rendered="true">
+					<div class="caption">
+						<h6 class="text-center">年货特产</h6>
+					</div>
+				</a>
+			</div>
+			<%--<div class="co
+			<%--<div class="col-xs-4">--%>
+				<%--<a class="thumbnail" href="<c:url value='/vmall/uc/dmz/promoCode.html/${user.agentCode}'/>" > <img data-src="" alt=""--%>
+					<%--src="<c:url value='/resources/images/tuiguang.jpg'/>"--%>
+					<%--data-holder-rendered="true">--%>
+					<%--<div class="caption">--%>
+						<%--<h6 class="text-center">推广码</h6>--%>
+					<%--</div>--%>
+				<%--</a>--%>
+			<%--</div>--%>
+			<%--&lt;%&ndash;<div class="col-xs-4">&ndash;%&gt;--%>
+				<%--<a class="thumbnail" href="<c:url value='/vmall/shopcart/index.html'/>"> <img data-src="" alt=""--%>
+					<%--src="<c:url value='/resources/images/shopCart.jpg'/>"--%>
+					<%--data-holder-rendered="true">--%>
+					<%--<div class="caption">--%>
+						<%--<h6 class="text-center">--%>
+							<%--购物车<span class="badge">${shopcart.quantity}</span>--%>
+						<%--</h6>--%>
+					<%--</div>--%>
+				<%--</a>--%>
+			<%--</div>--%>
 		</div>
 	</div>
 	<div class="container">

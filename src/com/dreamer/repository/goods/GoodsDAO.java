@@ -75,6 +75,7 @@ public class GoodsDAO extends HibernateBaseDAO<Goods>{
 			Function<Void, Boolean> getCacheQueries) {
 		// TODO Auto-generated method stub
 		return super.searchEntityByPage(p, (t)->{
+
 			Example example = Example.create(t.getEntity()).enableLike(
 					MatchMode.START);
 			Criteria criteria = getCurrentSession()

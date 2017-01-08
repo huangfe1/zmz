@@ -1,6 +1,7 @@
 package com.dreamer.view.pmall;
 
 import com.dreamer.domain.mall.goods.MallGoods;
+import com.dreamer.domain.mall.goods.MallGoodsType;
 import com.dreamer.domain.user.Agent;
 import com.dreamer.domain.user.User;
 import com.dreamer.repository.mall.goods.MallGoodsDAO;
@@ -53,6 +54,42 @@ public class PmallIndexController {
 		}
 		return "pmall/pmall_index";
 	}
+
+    /**
+     * 特产积分商城模版首页
+     * @return
+     */
+    @RequestMapping(value = "/tc_index.html",method = RequestMethod.GET)
+    public String tcIndex(){
+        return "pmall/tc_index";
+
+    }
+
+	/**
+	 * 特产积分商城
+	 * @return
+	 */
+	@RequestMapping(value = "/tc/index.html",method = RequestMethod.GET)
+	public String tcPmall(
+        @ModelAttribute("parameter") SearchParameter<MallGoods> param,
+        HttpServletRequest request, HttpServletResponse response,
+                Model model) {
+            try {
+                if(WebUtil.isLogin(request)){
+                    User user=(User)WebUtil.getCurrentUser(request);
+                    Agent agent=agentDAO.findById(user.getId());
+                    model.addAttribute("account_points", agent.getAccounts().getPointsBalance());
+                    model.addAttribute("myCode", agent.getAgentCode());//加入自己的编号
+                }
+            } catch (Exception exp) {
+                LOG.error("进入积分商城首页异常", exp);
+                exp.printStackTrace();
+            }
+            return "pmall/tcmall_index";
+
+	}
+
+
 	
 	@RequestMapping(value="/detail.html",method=RequestMethod.GET)
 	public String detail(@RequestParam("id") Integer id,HttpServletRequest request,String myCode,HttpServletResponse response,Model model){
@@ -109,9 +146,10 @@ public class PmallIndexController {
 	@RequestMapping(value = "/goods/query.json", method = RequestMethod.GET)
 	@ResponseBody
 	public List<PointsGoodsDTO> queryGoods(
-			@ModelAttribute("parameter") SearchParameter<MallGoods> param,
+			@ModelAttribute("parameter") SearchParameter<MallGoods> param,String gt,
 			HttpServletRequest request) {
 		param.getEntity().setShelf(true);
+		param.getEntity().setGoodsType(MallGoodsType.valueOf(gt));//加入种类
 		List<MallGoods> goods = mallGoodsDAO.searchEntityByPage(param, null,
 				(t) -> true);
 		List<PointsGoodsDTO> dtos=new ArrayList<PointsGoodsDTO>();

@@ -125,6 +125,57 @@
         .media{
             border-bottom:1px solid #e0e0e0;
         }
+
+
+
+        /****/
+        .new_user{
+            font: 12px/1.5 arial,tahoma,宋体;
+        }
+        .new_user {
+            display: none;
+            left: 50%;
+            margin-left: -210px;
+            margin-top: -160px;
+            position: fixed;
+            top: 50%;
+            z-index: 1000097;
+        }
+
+        .new_user .new_pic {
+            height: 320px;
+            overflow: hidden;
+            width: 400px;
+        }
+
+        .new_user img {
+            display: block;
+            height: 320px;
+            width: 400px;
+        }
+        .new_user .new_close {
+            background: url("<c:url value='/resources/images/close.png'/> ") no-repeat scroll 0 0;
+            cursor: pointer;
+            height: 32px;
+            overflow: hidden;
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 32px;
+        }
+        .overlay{
+            background-color: #000;
+            left: 0;
+            /*min-width: 990px;*/
+            opacity: 0.6;
+            filter:alpha(opacity=60);
+            position: absolute;
+            top: 0;
+            width: 100%;
+            z-index: 1000096;
+            height:100%;
+        }
+
     </style>
 </head>
 <body>
@@ -154,7 +205,7 @@
             </div>
         </div>
     </div>
- </form> --%>
+ </form>
 <header
         style="position:relative;margin:0 auto;width:100%;">
     <%--<img src="<c:url value='/resources/images/pmall_header.jpg'/>"--%>
@@ -185,13 +236,14 @@
 </header>
 <div class="container" id="nav">
     <div class="row">
-        <div class="col-xs-4">
+        <div class="col-xs-3">
             <a class="thumbnail" href="<c:url value='/pmall/uc/index.html'/>">
                 <img data-src="" alt=""
-                     src="<c:url value='/resources/images/user.jpg'/>"
+                     <%--src="<c:url value='/resources/images/user.jpg'/>"--%>
+                     src="<c:url value='/resources/images/ji.png'/>"
                      data-holder-rendered="true">
                 <div class="caption">
-                    <h6 class="text-center">积分商城订单
+                    <h6 class="text-center">我的订单
                 </div>
             </a>
         </div>
@@ -207,22 +259,38 @@
                 <%--</div>--%>
             <%--</a>--%>
         <%--</div>--%>
-        <div class="col-xs-4">
+        <div class="col-xs-3">
+            <a class="thumbnail"
+               href="<c:url value='/dmz/pmall/tc_index.html'/> "
+            > <img data-src="" alt=""
+                   <%--src="<c:url value='/resources/images/tuiguang.jpg'/>"--%>
+                   src="<c:url value='/resources/images/xn.png'/>"
+                   data-holder-rendered="true">
+                <div class="caption">
+                    <h6 class="text-center" style="color: red;">年味特产</h6>
+                </div>
+            </a>
+        </div>
+
+
+        <div class="col-xs-3">
             <a class="thumbnail"
                href="<c:url value='/dmz/tmall/index.html'/>"
             > <img data-src="" alt=""
-                   src="<c:url value='/resources/images/tuiguang.jpg'/>"
+                   <%--src="<c:url value='/resources/images/tuiguang.jpg'/>"--%>
+                   src="<c:url value='/resources/images/da.png'/>"
                    data-holder-rendered="true">
                 <div class="caption">
                     <h6 class="text-center">特权商城</h6>
                 </div>
             </a>
         </div>
-        <div class="col-xs-4">
+        <div class="col-xs-3">
             <a class="thumbnail"
                href="<c:url value='/pmall/shopcart/index.html'/>"> <img
                     data-src="" alt=""
-                    src="<c:url value='/resources/images/shopCart.jpg'/>"
+                    <%--src="<c:url value='/resources/images/shopCart.jpg'/>"--%>
+                    src="<c:url value='/resources/images/jix.png'/>"
                     data-holder-rendered="true">
                 <div class="caption">
                     <h6 class="text-center">
@@ -242,43 +310,18 @@
     </c:if>
 </div>
 <div class="container" id="products">
-    <%-- <div class="col-md-3 col-xs-6">
-        <div class="thumbnail">
-            <img data-src="" alt=""
-                src="<c:url value='/dmz/img/goods/example1.jpg'/>"
-                data-holder-rendered="true" class="product_img">
-            <div class="caption">
-                <h6 class="text-center">金龙鱼 阳光葵花子油</h6>
-                <p class="text-danger">
-                    <span class="glyphicon glyphicon-yen"></span>23.88
-                </p>
-                <p>
-                    <a href="#" class="btn btn-info pull-right btn-block btn-xs"
-                        role="button"><span
-                        class="glyphicon glyphicon-shopping-cart"></span>购买</a>
-                </p>
-            </div>
-        </div>
-    </div> --%>
-    <%-- <div class="row">
-        <div class="col-xs-12">
-        <div class="media">
-            <div class="media-left media-middle">
-            <a href="#" >
-                <img class="media-object product_img" src="<c:url value='/dmz/img/goods/example1.jpg'/>" alt="">
-            </a>
-            </div>
-            <div class="media-body">
-                <h5>金龙鱼 阳光葵花子油</h5>
-                <h6>1.5L装 原榨</h6>
-                <h6><span class="fa fa-rmb"></span> 65.8 &nbsp;<del><small class="text-muted">原价:68.8</small></del></h6>
-                <h6><a href="#" class="btn btn-link buyBtn pull-right" style="color:red!important;" role="button" data-id=''>
-                                                    <span class="fa fa-shopping-cart fa-2x"></span></a></h6>
-            </div>
-        </div>
-        </div>
-    </div> --%>
+
 </div>
+<!--广告图-->
+<div class="new_user"  id="new_user">
+    <div class="new_pic">
+        <a target="_blank" href="<c:url value='/dmz/pmall/tc_index.html'/> ">
+            <img alt="年货节" src="<c:url value='/resources/images/newUser1.png'/> ">
+        </a>
+    </div>
+    <%--<span class="new_close" ></span>--%>
+</div>
+<div class="overlay" id="overlay"></div>
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel">
@@ -303,6 +346,8 @@
     </div>
 </div>
 <jsp:include page="/WEB-INF/view/common/head.jsp"></jsp:include>
+<script src="http://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
 <script type="text/javascript">
     $(function() {
         //启动幻灯片
@@ -314,6 +359,7 @@
         var query = function() {
             var param = {
                 "entity.name" : $("#keywords").val(),
+                "gt" : "pmall",
                 "start" : $("#start").val(),
                 "length" : $("#length").val(),
                 "useDatatables" : true
@@ -444,6 +490,38 @@
                         query();
                     }
                 });
+        //插入年货节广告
+        var showNew = function () {
+            var document_height = $(document).height();
+            var window_height = $(window).height();
+            var height = document_height > window_height ? document_height : window_height;
+            $("#overlay").css({"height": height, "display": "block"})
+            $("#new_user").show();
+        }
+
+        var hideNew = function () {
+//            alert("--");
+            $("#new_user").hide();
+            $("#overlay").css({"display": "none"})
+        }
+
+        showNew();
+        setTimeout(hideNew,2800);
+//        setInterval(hideNew,3000);
+//        window.clearInterval;
+//        var isNew = $.cookie("isNew");
+//        if(isNew==null||isNew==false){
+//            showNew();
+//            $.cookie("isNew",false,{expires:1,path:'/'});//有效期七天，只在seckill路径下有效
+//        }else {
+//
+////            hideNew();
+//            showNew();
+//        }
+//        $(".new_close").click(function () {
+//            hideNew();
+//        });
+
     });
 </script>
 </body>

@@ -1,31 +1,23 @@
 package com.dreamer.view.mall.goods;
 
-import java.util.List;
-import java.util.Optional;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.junit.Test;
+import com.dreamer.domain.mall.goods.MallGoods;
+import com.dreamer.domain.mall.goods.MallGoodsType;
+import com.dreamer.domain.user.User;
+import com.dreamer.repository.mall.goods.MallGoodsDAO;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
+import org.springframework.web.bind.annotation.*;
 import ps.mx.otter.utils.DatatableDTO;
 import ps.mx.otter.utils.SearchParameter;
 import ps.mx.otter.utils.WebUtil;
 
-import com.dreamer.domain.goods.GoodsType;
-import com.dreamer.domain.mall.goods.MallGoods;
-import com.dreamer.domain.user.User;
-import com.dreamer.repository.mall.goods.MallGoodsDAO;
-import com.fasterxml.jackson.annotation.JsonView;
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/mall/goods")
@@ -40,6 +32,7 @@ public class MallGoodsQueryController {
 					(t) -> true);
 			WebUtil.turnPage(parameter, request);
 			model.addAttribute("goods", goods);*/
+			model.addAttribute("types",MallGoodsType.values());
 		} catch (Exception exp) {
 			exp.printStackTrace();
 			LOG.error("产品查询失败", exp);
@@ -75,6 +68,7 @@ public class MallGoodsQueryController {
 			HttpServletRequest request, Model model) {
 		User user = (User) WebUtil.getCurrentUser(request);
 		if (user.isAdmin()) {
+			model.addAttribute("types", MallGoodsType.values());
 			return "/mall/mallGoods_edit";
 		} else {
 			LOG.error("非管理员身份,无积分商城商品编辑权限");

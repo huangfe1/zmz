@@ -1,7 +1,6 @@
 package com.dreamer.view.goods;
 
-import com.dreamer.domain.goods.GoodsTransferStatus;
-import com.dreamer.domain.goods.Transfer;
+import com.dreamer.domain.goods.*;
 import com.dreamer.domain.user.Accounts;
 import com.dreamer.domain.user.Agent;
 import com.dreamer.domain.user.MutedUser;
@@ -13,6 +12,8 @@ import com.dreamer.repository.user.AgentDAO;
 import com.dreamer.repository.user.AgentLevelDAO;
 import com.dreamer.repository.user.MutedUserDAO;
 import com.dreamer.service.goods.TransferHandler;
+import com.dreamer.util.ExcelFile;
+import org.apache.commons.collections.map.HashedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +28,8 @@ import ps.mx.otter.utils.SearchParameter;
 import ps.mx.otter.utils.WebUtil;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
-import java.util.Optional;
+import javax.servlet.http.HttpServletResponse;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -225,14 +226,14 @@ public class TransferQueryController {
 				model.addAttribute("applyAgent", applyAgent.get());
 			}
 			if(user.isAdmin()){
-				List<Transfer> ts=transferDAO.searchEntityByPage(parameter, null, null,null, applyAgent);
+				List<Transfer> ts=transferDAO.searchEntityByPage(parameter, null, null,null);
 				WebUtil.turnPage(parameter, request);
 				model.addAttribute("ts", ts);
 			}else{
 				if(agentId==null){
 					agentId=user.getId();
 				}
-				List<Transfer> ts=transferDAO.searchEntityByPage(parameter, null, null, agentId,applyAgent);
+				List<Transfer> ts=transferDAO.searchEntityByPage(parameter, null, null, agentId);
 				WebUtil.turnPage(parameter, request);
 				model.addAttribute("ts", ts);
 			}
@@ -242,7 +243,81 @@ public class TransferQueryController {
 			model.addAttribute("message", exp.getMessage());
 			return "goods/transfer_403";
 		}
+        model.addAttribute("parameter",parameter);
 		return "goods/transfer_records";
+
+	}
+
+	/**
+	 * 下载订单
+	 * @param parameter
+	 * @param agentId
+	 * @param applyAgent
+	 * @param request
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/recordsDownload.html")
+	public void recordsDownload(
+            @ModelAttribute("transfer") SearchParameter<Transfer> parameter,
+            @RequestParam(value="agent",required=false) Integer agentId,
+            HttpServletResponse response,HttpServletRequest request) {
+		try {
+			User user = (User) WebUtil.getCurrentUser(request);
+			if(!user.isAdmin()){
+				if(agentId==null){
+					agentId=user.getId();
+				}
+			}
+            List<Transfer> orders=transferDAO.searchEntity(parameter,agentId);
+            List<String> headers = new ArrayList<>();
+            headers.add("转入方");
+            headers.add("转出方");
+            headers.add("申请时间");
+            headers.add("使用代金券+预存款");
+            headers.add("状态");
+            headers.add("备注");
+            headers.add("类型");
+            headers.add("数量");
+            List<Map>   datas = new ArrayList<>();
+            Map m = null;
+            Transfer order;
+            for(int i=0;i<orders.size();i++){
+                order=orders.get(i);
+                m=new HashedMap();
+                m.put(0,order.getUserByToAgent().getRealName()+order.getUserByToAgent().getAgentCode());
+                m.put(1,order.getUserByFromAgent().getRealName()+order.getUserByFromAgent().getAgentCode());
+                m.put(2,order.getApplyTime());
+                m.put(3,order.getVoucher()+"+"+order.getAdvance());
+                m.put(4,order.getStatus().getDesc());
+                m.put(5,order.getRemark());
+                m.put(6,order.getApplyOrigin().getDesc());
+                StringBuffer stringBuffer=new StringBuffer();
+                for(TransferItem item:order.getItems().values()){//遍历所有的item
+                    String gn=item.getGoodsName();
+                    Integer gq=item.getQuantity();
+                    stringBuffer.append(gn);
+                    stringBuffer.append(gq);
+                    stringBuffer.append("/");
+                }
+                m.put(7,stringBuffer.toString());
+                datas.add(m);
+            }
+
+            List<String> ss=new ArrayList<>();
+            ss.add("订单详情");
+
+            List<List> hs=new ArrayList<>();
+            hs.add(headers);
+
+            List<List<Map>> ds=new ArrayList<>();
+            ds.add(datas);
+//		ExcelFile.ExpExs("","特权代理商城订单",headers,datas,response);//创建表格并写入
+            ExcelFile.ExpExs("",ss,hs,ds,response);//创建表格并写入
+
+		} catch (Exception exp) {
+			exp.printStackTrace();
+		}
 
 	}
 	
@@ -260,13 +335,13 @@ public class TransferQueryController {
 			if(user.isAdmin()){
 				MutedUser mutedUser=(MutedUser)WebUtil.getSessionAttribute(request, Constant.MUTED_USER_KEY);
 				parameter.getEntity().setUserByFromAgent(mutedUser);
-				List<Transfer> ts=transferDAO.searchEntityByPage(parameter, null, null,null, applyAgent);
+				List<Transfer> ts=transferDAO.searchEntityByPage(parameter, null, null,null);
 				WebUtil.turnPage(parameter, request);
 				model.addAttribute("trans", ts);
 			}else{
 				Agent agent=agentDAO.findById(user.getId());
 				parameter.getEntity().setUserByFromAgent(agent);
-				List<Transfer> ts=transferDAO.searchEntityByPage(parameter, null, null,null, applyAgent);
+				List<Transfer> ts=transferDAO.searchEntityByPage(parameter, null, null,null);
 				WebUtil.turnPage(parameter, request);
 				model.addAttribute("trans", ts);
 			}

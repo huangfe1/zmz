@@ -175,6 +175,7 @@ public class VMallIndexController {
 		Agent parentAgent = proxy != null ? proxy : mutedUserDAO
 				.findByAgentCode(agentCode);
 		List<Goods> goods = null;
+		param.getEntity().setShelf(1);//只要上架的
 //		if (parentAgent.isMutedUser()
 //				|| parentAgent.hasMainGoodsAuthorization(null)) {
 			goods = goodsDAO.searchEntityByPage(param, null, (t) -> true);

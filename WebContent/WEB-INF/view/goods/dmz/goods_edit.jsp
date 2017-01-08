@@ -22,14 +22,14 @@
 			<div class="container-fluid">
 				<form action="<c:url value='/goods/edit.json'/>" name="editForm" enctype="multipart/form-data"
 							class="form-horizontal"  id="editForm" method="post">
-				<div class="row">				
+				<div class="row">
 					<div class="col-md-12 col-xs-12">
 					<div class="panel panel-primary">
 							<div class="panel-heading">
 								基本信息
 							</div>
-							<div class="panel-body">	
-						
+							<div class="panel-body">
+
 							<input type="hidden" name="id" value="${parameter.entity.id}">
 							<div class="form-group">
 								<label for="name" class="col-sm-2 control-label">产品名称</label>
@@ -111,8 +111,8 @@
 														checked="checked"
 													</c:if>
 													name="benchmarkCheckBox">是主打产品
-													<input type="hidden" name="benchmark" 
-													value="${parameter.entity.benchmark ? 1 : 0}"> 
+													<input type="hidden" name="benchmark"
+													value="${parameter.entity.benchmark ? 1 : 0}">
 												</label>
 											</div>
 										</div>
@@ -135,7 +135,7 @@
 						<div class="panel panel-primary">
 							<div class="panel-heading">
 								产品授权信息
-							</div>							
+							</div>
 							<input type="hidden" name="authorizationType.id" value="${parameter.entity.authorizationType.id}">
 							<div class="panel-body">
 							<div class="form-group">
@@ -150,7 +150,7 @@
 							<div class="form-group">
 								<label for="editOrder" class="col-sm-2 control-label">授权说明</label>
 								<div class="col-sm-4">
-									<textarea class="form-control" name="authorizationType.remark" 
+									<textarea class="form-control" name="authorizationType.remark"
 									 rows="3" tabIndex="17" placeholder="请输入授权类型的说明">${parameter.entity.authorizationType.remark}</textarea>
 								</div>
 								<div class="col-md-4 col-xs-4 text-error"></div>
@@ -172,7 +172,7 @@
 							<div class="panel-heading">
 								价格设置
 							</div>
-							<div class="table-responsive">				
+							<div class="table-responsive">
 							<table class="table table-condensed">
 								<thead>
 									<tr>
@@ -248,7 +248,7 @@
 										}else{
 											alert("保存失败");
 										}
-										
+
 									},
 									error : function(xhr, textStatus,
 											errorThrown) {

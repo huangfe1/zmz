@@ -169,14 +169,60 @@ public class TransferDAO extends HibernateBaseDAO<Transfer> {
 				}, getCacheQueries);
 	}
 
-	
 
-	
-	
+    /**
+     * 查找所有符合记录的
+     * @param t
+     * @param agentId
+     * @return
+     */
+	public List<Transfer> searchEntity(SearchParameter<Transfer> t,
+									   Integer agentId) {
+        Example example = Example.create(t.getEntity())
+                .enableLike(MatchMode.START)
+                .excludeZeroes();
+        Criteria criteria = getCurrentSession()
+                .createCriteria(getClazz());
+        criteria.add(example);
+        Criteria userByFromAgentCriteria=criteria.createCriteria("userByFromAgent");
+        Criteria userByToAgentCriteria=criteria.createCriteria("userByToAgent");
+        if (Objects.nonNull(t.getEntity().getUserByFromAgent())) {
+            userByFromAgentCriteria.add(Restrictions.or(  Restrictions.like("realName",
+                    t.getEntity().getUserByFromAgent().getRealName(),MatchMode.ANYWHERE),  Restrictions.eq("agentCode",
+                    t.getEntity().getUserByFromAgent().getRealName())));
+        }
+
+        if (Objects.nonNull(t.getEntity().getUserByToAgent())) {
+            userByToAgentCriteria.add(Restrictions.or(  Restrictions.like("realName",
+                    t.getEntity().getUserByToAgent().getRealName(),MatchMode.ANYWHERE),  Restrictions.eq("agentCode",
+                    t.getEntity().getUserByToAgent().getRealName())));
+
+        }
+
+
+        if (Objects.nonNull(agentId)) {
+            criteria.add(Restrictions.or(Restrictions.eq(
+                    "userByToAgent.id", agentId),
+                    Restrictions.eq("userByFromAgent.id",
+                            agentId)));
+        }
+        if (t.getStartTime() != null
+                || t.getEndTime() != null) {
+            criteria.add(Restrictions.between(
+                    "applyTime", t.getStartTimeByDate(),
+                    t.getEndTimeByDate()));
+        }
+        criteria.addOrder(Order.desc("updateTime"));
+        return criteria.list();
+
+	}
+
+
+
 	public List<Transfer> searchEntityByPage(SearchParameter<Transfer> p,
 			Function<SearchParameter<Transfer>, ? extends Object> getSQL,
-			Function<Void, Boolean> getCacheQueries, Integer agentId,
-			Optional<String> applyAgent) {
+			Function<Void, Boolean> getCacheQueries, Integer agentId
+			) {
 		// TODO Auto-generated method stub
 		return super
 				.searchEntityByPage(
@@ -185,27 +231,23 @@ public class TransferDAO extends HibernateBaseDAO<Transfer> {
 							Example example = Example.create(t.getEntity())
 									.enableLike(MatchMode.START)
 									.excludeZeroes();
-							Criteria criteria = getHibernateTemplate()
-									.getSessionFactory().getCurrentSession()
+							Criteria criteria = getCurrentSession()
 									.createCriteria(getClazz());
 							criteria.add(example);
-							/*
-							 * Goods goods = t.getEntity().getGoods(); if
-							 * (Objects.nonNull(goods)) { if
-							 * (Objects.nonNull(goods.getId())) {
-							 * criteria.createCriteria("goods").add(
-							 * Restrictions.idEq(goods.getId())); } else {
-							 * criteria.createCriteria("goods").add(
-							 * Restrictions.like("name", goods.getName(),
-							 * MatchMode.ANYWHERE)); } }
-							 */
-
+                            Criteria userByFromAgentCriteria=criteria.createCriteria("userByFromAgent");
+                            Criteria userByToAgentCriteria=criteria.createCriteria("userByToAgent");
                             if (Objects.nonNull(t.getEntity().getUserByFromAgent())) {
-                                criteria.add(
-                                        Restrictions.eq("userByFromAgent.id",
-                                                t.getEntity().getUserByFromAgent().getId()));
+                                userByFromAgentCriteria.add(Restrictions.or(  Restrictions.like("realName",
+                                        t.getEntity().getUserByFromAgent().getRealName(),MatchMode.ANYWHERE),  Restrictions.eq("agentCode",
+                                        t.getEntity().getUserByFromAgent().getRealName())));
                             }
 
+                            if (Objects.nonNull(t.getEntity().getUserByToAgent())) {
+                                userByToAgentCriteria.add(Restrictions.or(  Restrictions.like("realName",
+                                        t.getEntity().getUserByToAgent().getRealName(),MatchMode.ANYWHERE),  Restrictions.eq("agentCode",
+                                        t.getEntity().getUserByToAgent().getRealName())));
+
+                            }
 
 							if (Objects.nonNull(agentId)) {
 								criteria.add(Restrictions.or(Restrictions.eq(
@@ -213,12 +255,12 @@ public class TransferDAO extends HibernateBaseDAO<Transfer> {
 										Restrictions.eq("userByFromAgent.id",
 												agentId)));
 							}
-							if (applyAgent.isPresent()) {
-								criteria.createCriteria("userByToAgent").add(
-										Restrictions.like("realName",
-												applyAgent.get(),
-												MatchMode.ANYWHERE));
-							}
+//							if (applyAgent.isPresent()) {
+//								criteria.createCriteria("userByToAgent").add(
+//										Restrictions.like("realName",
+//												applyAgent.get(),
+//												MatchMode.ANYWHERE));
+//							}
 							if (t.getStartTime() != null
 									|| t.getEndTime() != null) {
 								criteria.add(Restrictions.between(

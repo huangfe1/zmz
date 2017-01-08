@@ -201,6 +201,36 @@
 									<div class="col-md-4 col-xs-4 text-error"></div>
 								</div>
 								<div class="form-group">
+									<label for="" class="col-sm-2 control-label">
+                                        <c:if test="${parameter.entity.shelf==1}">
+                                            是否下架商品
+                                        </c:if>
+                                        <c:if test="${parameter.entity.shelf==0}">
+                                            是否上架商品
+                                        </c:if>
+
+                                    </label>
+									<div class="col-sm-6">
+										<label class="radio-inline">
+											<input type="checkbox"
+												<c:if test="${parameter.entity.shelf==1}">
+												    value="0"
+												</c:if>
+                                            <c:if test="${parameter.entity.shelf==0}">
+                                                   value="1"
+                                            </c:if>
+												   name="shelf" id="checkBox" >
+										<%--</label> <label class="radio-inline"> <input--%>
+											<%--type="checkbox" name="shelf" id="inlineRadio2"--%>
+									<%--<c:if test="${not parameter.entity.shelf}">--%>
+											<%--checked="checked"--%>
+									<%--</c:if>--%>
+											<%--value="0"> 下架--%>
+									<%--</label>--%>
+									</div>
+									<div class="col-md-4 col-xs-4 text-error"></div>
+								</div>
+								<div class="form-group">
 									<label for="editOrder" class="col-sm-2 control-label">排列顺序</label>
 									<div class="col-sm-4">
 										<input type="number" class="form-control" id="editOrder"
@@ -441,6 +471,9 @@
 						.children("div.text-error"));
 			}
 		});
+
+
+
 		$("#editForm").find("input[type='checkbox']").change(function(e){
 			var $t=$(this);
 			var next=$t.next("input[type='hidden']");

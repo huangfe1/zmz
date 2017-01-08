@@ -15,6 +15,11 @@
     <comment>货物名称</comment>
    </column>
   </property>
+  <property name="shelf" type="integer">
+   <column name="shelf" not-null="true">
+    <comment>是否上架 1-是 0-否</comment>
+   </column>
+  </property>
   <property generated="never" lazy="false" name="imgFile" type="java.lang.String">
    <column length="64" name="img_file" not-null="false">
     <comment>图片文件</comment>

@@ -28,6 +28,21 @@
                                 </div>
                                 <div class="col-md-4 col-xs-4 text-error"></div>
                             </div>
+
+                            <!-- 产品类型 -->
+                            <div class="form-group">
+                                <label for="spec" class="col-sm-2 control-label">产品类型</label>
+                                <div class="col-sm-6">
+                                    <c:forEach items="${types}" var="type">
+                                        <label class="checkbox-inline">
+                                            <input required  type="radio" name="goodsType" id="goodsType" value="${type}"  ${parameter.entity.goodsType eq  type ? 'checked' : ''} >
+                                                ${type.desc}
+                                        </label>
+                                    </c:forEach>
+                                </div>
+                                <div class="col-md-4 col-xs-4 text-error"></div>
+                            </div>
+
                             <!--产品的描述白哦题-->
                             <div class="form-group">
                                 <label for="shareName" class="col-sm-2 control-label">分享标题</label>

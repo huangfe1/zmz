@@ -45,6 +45,13 @@
 								<option value="1" >上架</option>
 								<option value="0" >下架</option>
 							</select>
+							<label class="">种类</label>
+							<select name="entity.types" id="type" class="form-control">
+								<option value="">所有</option>
+						<c:forEach items="${types}" var="type">
+							<option value="${type}" >${type.desc}</option>
+						</c:forEach>
+							</select>
 							<button type="button" class="btn btn-primary" id="searchDT"
 									name="searchDT">
 								<span class="glyphicon glyphicon-search searchBtn"></span>&nbsp;查询
@@ -164,7 +171,7 @@
 				"url" : "<c:url value='/mall/goods/query.json'/>",
 				"data" : function(d) {
 					return $.extend({}, d, {
-						"entity.name" : $('#name').val(),"entity.shelf":$('#shelf').val(),
+						"entity.name" : $('#name').val(),"entity.shelf":$('#shelf').val(),"entity.goodsType":$('#type').val(),
 						"useDatatables":"true"
 					});
 				}

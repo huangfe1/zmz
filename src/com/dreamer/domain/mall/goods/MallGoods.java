@@ -18,6 +18,8 @@ public class MallGoods implements java.io.Serializable {
 	private String name;
 	@JsonView({MallGoodsView.class,BaseView.class})
 	private String shareName;
+	@JsonView({MallGoodsView.class,BaseView.class})
+	private MallGoodsType goodsType;
 
 	@JsonView({MallGoodsView.class,BaseView.class})
 	private String shareDetail;
@@ -214,6 +216,14 @@ public class MallGoods implements java.io.Serializable {
 
 	public void setShelf(Boolean shelf) {
 		this.shelf = shelf;
+	}
+
+	public MallGoodsType getGoodsType() {
+		return goodsType;
+	}
+
+	public void setGoodsType(MallGoodsType goodsType) {
+		this.goodsType = goodsType;
 	}
 
 	public Date getUpdateTime() {
